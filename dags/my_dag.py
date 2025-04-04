@@ -21,8 +21,17 @@ def _training_model():
     model_accuracy = randint(1, 10)
     return model_accuracy
 
-with DAG("my_dag", start_date=datetime(2021, 1, 1),
-    schedule_interval="@daily", catchup=False) as dag:
+with DAG(
+    dag_id="my_dag",
+    start_date=datetime(2021, 1, 1),
+    schedule_interval="@daily",
+    catchup=False,
+) as dag:
+        
+        """
+         catchup=False means don't run the dag for all the previous dates from the start_date to the current date, 
+         only run the dag for the current date and the dates after that.
+        """
 
         training_model_A = PythonOperator(
             task_id="training_model_A",
